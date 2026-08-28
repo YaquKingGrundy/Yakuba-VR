@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Yakuba VR</title>
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <a-sky color="#111111"></a-sky>
+
+    <a-plane
+      position="0 0 -4"
+      rotation="-90 0 0"
+      width="20"
+      height="20"
+      color="#444444">
+    </a-plane>
+
+    <a-box
+      position="0 1.5 -3"
+      rotation="0 45 0"
+      color="#FF0000"
+      animation="property: rotation; to: 0 405 0; loop: true; dur: 5000">
+    </a-box>
+
+    <a-text
+      value="YAKUBA VR"
+      position="-1.2 2.7 -3"
+      color="white"
+      width="5">
+    </a-text>
+
+    <a-camera position="0 1.6 0"></a-camera>
+  </a-scene>
+</body>
+</html>
