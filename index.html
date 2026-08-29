@@ -9,7 +9,12 @@
 <body>
   <a-scene>
     <a-sky color="#111111"></a-sky>
-
+<a-assets>
+  <a-asset-item
+    id="nyra"
+    src="Punk%20by%20Quaternius%20-%20djXoqejw6w.glb">
+  </a-asset-item>
+</a-assets>
     <a-plane
       position="0 0 -4"
       rotation="-90 0 0"
@@ -18,8 +23,8 @@
       color="#444444">
     </a-plane>
 
-  <a-entity
-  gltf-model="Punk%20by%20Quaternius%20-%20djXoqejw6w.glb"
+<a-entity
+  gltf-model="#nyra"
   position="0 0 -3"
   rotation="0 0 0"
   scale="1 1 1">
