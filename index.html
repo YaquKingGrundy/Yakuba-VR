@@ -35,6 +35,16 @@ AFRAME.registerComponent('head-track', {
       });
 
       if (!this.head) this.head = backup;
+      const debug = document.querySelector('#debug');
+
+if (debug) {
+  debug.setAttribute(
+    'value',
+    this.head
+      ? 'HEAD FOUND: ' + this.head.name
+      : 'HEAD NOT FOUND'
+  );
+}
 
       console.log('Nyra head bone:', this.head);
     };
@@ -106,6 +116,13 @@ AFRAME.registerComponent('head-track', {
       color="white"
       width="5">
     </a-text>
+    <a-text
+  id="debug"
+  value="HEAD DEBUG: waiting..."
+  position="-1.5 2.2 -2"
+  color="yellow"
+  width="4">
+</a-text>
 
     <a-camera position="0 1.6 0"></a-camera>
   </a-scene>
