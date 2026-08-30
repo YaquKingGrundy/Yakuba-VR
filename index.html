@@ -6,6 +6,27 @@
   <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.7.0/dist/aframe-extras.min.js"></script>
 
+<script>
+AFRAME.registerComponent('face-player', {
+  tick: function () {
+    const camera = document.querySelector('[camera]');
+    if (!camera) return;
+
+    const cameraPosition = new THREE.Vector3();
+    camera.object3D.getWorldPosition(cameraPosition);
+
+    const nyraPosition = new THREE.Vector3();
+    this.el.object3D.getWorldPosition(nyraPosition);
+
+    const dx = cameraPosition.x - nyraPosition.x;
+    const dz = cameraPosition.z - nyraPosition.z;
+
+    const angle = Math.atan2(dx, dz);
+
+    this.el.object3D.rotation.y = angle;
+  }
+});
+</script>
 </head>
 
 <body>
@@ -28,6 +49,7 @@
 <a-entity
   gltf-model="#nyra"
   animation-mixer="clip: CharacterArmature|Idle; loop: repeat"
+  face-player
   position="0 0 -3"
   rotation="0 0 0"
   scale="1 1 1">
