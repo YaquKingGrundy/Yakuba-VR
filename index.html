@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <title>Yakuba VR</title>
   <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+<script>
+AFRAME.registerComponent('model-debug', {
+  init: function () {
+    const status = document.querySelector('#status');
+
+    this.el.addEventListener('model-loaded', () => {
+      status.setAttribute('value', 'MODEL LOADED');
+    });
+
+    this.el.addEventListener('model-error', () => {
+      status.setAttribute('value', 'MODEL ERROR');
+    });
+  }
+});
+</script>
 </head>
 
 <body>
@@ -25,11 +40,18 @@
 
 <a-entity
   gltf-model="#nyra"
+  model-debug 
   position="0 0 -3"
   rotation="0 0 0"
   scale="1 1 1">
 </a-entity>
-
+<a-text
+  id="status"
+  value="LOADING MODEL..."
+  position="-1.2 1.5 -2"
+  color="red"
+  width="4">
+</a-text>
     <a-text
       value="YAKUBA VR"
       position="-1.2 2.7 -3"
