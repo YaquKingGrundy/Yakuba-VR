@@ -7,23 +7,68 @@
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.7.0/dist/aframe-extras.min.js"></script>
 
 <script>
-AFRAME.registerComponent('face-player', {
-  tick: function () {
-    const camera = document.querySelector('[camera]');
-    if (!camera) return;
+AFRAME.registerComponent('head-track', {
+  init: function () {
+    this.head = null;
+    this.camera = document.querySelector('[camera]');
+    this.yaw = 0;
 
-    const cameraPosition = new THREE.Vector3();
-    camera.object3D.getWorldPosition(cameraPosition);
+    const findHead = () => {
+      let backup = null;
 
-    const nyraPosition = new THREE.Vector3();
-    this.el.object3D.getWorldPosition(nyraPosition);
+      this.el.object3D.traverse((obj) => {
+        if (!obj.isBone) return;
 
-    const dx = cameraPosition.x - nyraPosition.x;
-    const dz = cameraPosition.z - nyraPosition.z;
+        const name = obj.name.toLowerCase();
 
-    const angle = Math.atan2(dx, dz);
+        if (
+          name === 'head' ||
+          name.endsWith('|head') ||
+          name.endsWith(':head')
+        ) {
+          this.head = obj;
+        }
 
-    this.el.object3D.rotation.y = angle;
+        if (!backup && name.includes('head') && !name.includes('end')) {
+          backup = obj;
+        }
+      });
+
+      if (!this.head) this.head = backup;
+
+      console.log('Nyra head bone:', this.head);
+    };
+
+    this.el.addEventListener('model-loaded', findHead);
+  },
+
+  tock: function () {
+    if (!this.head || !this.camera) return;
+
+    const cameraWorld = new THREE.Vector3();
+    this.camera.object3D.getWorldPosition(cameraWorld);
+
+    const target = this.el.object3D.worldToLocal(cameraWorld.clone());
+
+    let desiredYaw = Math.atan2(target.x, target.z);
+
+    const maxTurn = THREE.MathUtils.degToRad(40);
+
+    desiredYaw = THREE.MathUtils.clamp(
+      desiredYaw,
+      -maxTurn,
+      maxTurn
+    );
+
+    this.yaw += (desiredYaw - this.yaw) * 0.08;
+
+    const offset = new THREE.Quaternion();
+    offset.setFromAxisAngle(
+      new THREE.Vector3(0, 1, 0),
+      this.yaw
+    );
+
+    this.head.quaternion.multiply(offset);
   }
 });
 </script>
@@ -49,7 +94,7 @@ AFRAME.registerComponent('face-player', {
 <a-entity
   gltf-model="#nyra"
   animation-mixer="clip: CharacterArmature|Idle; loop: repeat"
-  face-player
+  head-track
   position="0 0 -3"
   rotation="0 0 0"
   scale="1 1 1">
