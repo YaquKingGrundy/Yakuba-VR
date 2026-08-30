@@ -13,8 +13,19 @@ AFRAME.registerComponent('model-debug', {
       status.setAttribute('value', 'MODEL LOADED');
     });
 
-    this.el.addEventListener('model-error', () => {
-      status.setAttribute('value', 'MODEL ERROR');
+    this.el.addEventListener('model-error', (event) => {
+      let details = '';
+
+      try {
+        details = JSON.stringify(event.detail);
+      } catch (e) {
+        details = String(event.detail);
+      }
+
+      status.setAttribute(
+        'value',
+        'MODEL ERROR: ' + details
+      );
     });
   }
 });
