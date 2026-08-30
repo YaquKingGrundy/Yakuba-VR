@@ -42,7 +42,7 @@ AFRAME.registerComponent('head-track', {
     this.el.addEventListener('model-loaded', findHead);
   },
 
-  tock: function () {
+  tick: function () {
     if (!this.head || !this.camera) return;
 
     const cameraWorld = new THREE.Vector3();
