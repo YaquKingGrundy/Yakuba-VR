@@ -5,32 +5,7 @@
   <title>Yakuba VR</title>
   <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.7.0/dist/aframe-extras.min.js"></script>
-<script>
-AFRAME.registerComponent('model-debug', {
-  init: function () {
-    const status = document.querySelector('#status');
 
-    this.el.addEventListener('model-loaded', () => {
-      status.setAttribute('value', 'MODEL LOADED');
-    });
-
-    this.el.addEventListener('model-error', (event) => {
-      let details = '';
-
-      try {
-        details = JSON.stringify(event.detail);
-      } catch (e) {
-        details = String(event.detail);
-      }
-
-      status.setAttribute(
-        'value',
-        'MODEL ERROR: ' + details
-      );
-    });
-  }
-});
-</script>
 </head>
 
 <body>
@@ -57,13 +32,7 @@ AFRAME.registerComponent('model-debug', {
   rotation="0 0 0"
   scale="1 1 1">
 </a-entity>
-<a-text
-  id="status"
-  value="LOADING MODEL..."
-  position="-1.2 1.5 -2"
-  color="red"
-  width="4">
-</a-text>
+
     <a-text
       value="YAKUBA VR"
       position="-1.2 2.7 -3"
