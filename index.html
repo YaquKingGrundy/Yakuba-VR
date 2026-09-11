@@ -53,9 +53,20 @@ if (debug) {
   },
 
   tick: function () {
-    if (!this.head) return;
+    if (!this.head || !this.camera) return;
 
-    this.head.rotation.y = Math.sin(Date.now() * 0.002) * 0.5;
+    const cameraPosition = new THREE.Vector3();
+    this.camera.object3D.getWorldPosition(cameraPosition);
+
+    const headPosition = new THREE.Vector3();
+    this.head.getWorldPosition(headPosition);
+
+    const dx = cameraPosition.x - headPosition.x;
+    const dz = cameraPosition.z - headPosition.z;
+
+    const angle = Math.atan2(dx, dz);
+
+    this.head.rotation.y = angle;
   }
 });
 </script>
