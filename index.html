@@ -53,32 +53,9 @@ if (debug) {
   },
 
   tick: function () {
-    if (!this.head || !this.camera) return;
+    if (!this.head) return;
 
-    const cameraWorld = new THREE.Vector3();
-    this.camera.object3D.getWorldPosition(cameraWorld);
-
-    const target = this.el.object3D.worldToLocal(cameraWorld.clone());
-
-    let desiredYaw = Math.atan2(target.x, target.z);
-
-    const maxTurn = THREE.MathUtils.degToRad(40);
-
-    desiredYaw = THREE.MathUtils.clamp(
-      desiredYaw,
-      -maxTurn,
-      maxTurn
-    );
-
-    this.yaw += (desiredYaw - this.yaw) * 0.08;
-
-    const offset = new THREE.Quaternion();
-    offset.setFromAxisAngle(
-      new THREE.Vector3(0, 1, 0),
-      this.yaw
-    );
-
-    this.head.quaternion.multiply(offset);
+    this.head.rotation.y = Math.sin(Date.now() * 0.002) * 0.5;
   }
 });
 </script>
