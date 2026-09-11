@@ -53,7 +53,13 @@ if (debug) {
   },
 
   tick: function () {
-    if (!this.head || !this.camera) return;
+    if (!this.head) return;
+
+    if (!this.camera) {
+        this.camera = document.querySelector('[camera]');
+    }
+
+    if (!this.camera) return;
 
     const cameraPosition = new THREE.Vector3();
     this.camera.object3D.getWorldPosition(cameraPosition);
