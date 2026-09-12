@@ -17,6 +17,7 @@ AFRAME.registerComponent('head-track', {
       let backup = null;
       let eyeBones = [];
       let morphs = [];
+      let torsoBones = [];
 
       this.el.object3D.traverse((obj) => {
         if (obj.morphTargetDictionary) {
@@ -27,6 +28,13 @@ AFRAME.registerComponent('head-track', {
         const name = obj.name.toLowerCase();
         
         console.log('BONE:', obj.name);
+        if (
+  name.includes('spine') ||
+  name.includes('chest') ||
+  name.includes('upper')
+) {
+  torsoBones.push(obj.name);
+        }
         if (name.includes('eye')) {
     eyeBones.push(obj.name);
         }
@@ -55,8 +63,9 @@ if (debug) {
     ' | EYES: ' +
     (eyeBones.length ? eyeBones.join(', ') : 'NONE') +
     ' | MORPHS: ' +
-    (morphs.length ? morphs.flat().join(', ') : 'NONE')
-  : 'HEAD NOT FOUND'
+(morphs.length ? morphs.flat().join(', ') : 'NONE') +
+' | TORSO: ' +
+(torsoBones.length ? torsoBones.join(', ') : 'NONE')
   );
 }
 
