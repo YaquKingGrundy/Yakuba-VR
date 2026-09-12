@@ -70,8 +70,12 @@ if (debug) {
     };
 
     this.el.addEventListener('model-loaded', findHead);
-  },
 
+if (this.el.getObject3D('mesh')) {
+    findHead();
+}
+
+},
   tick: function () {
     if (!this.head) return;
 
