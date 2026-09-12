@@ -70,9 +70,19 @@ if (debug) {
     const dx = cameraPosition.x - headPosition.x;
     const dz = cameraPosition.z - headPosition.z;
 
-    const angle = Math.atan2(dx, dz);
+    let targetAngle = Math.atan2(dx, dz);
 
-    this.head.rotation.y = angle;
+const maxTurn = THREE.MathUtils.degToRad(45);
+
+targetAngle = THREE.MathUtils.clamp(
+    targetAngle,
+    -maxTurn,
+    maxTurn
+);
+
+this.yaw += (targetAngle - this.yaw) * 0.08;
+
+this.head.rotation.y = this.yaw;
   }
 });
 </script>
