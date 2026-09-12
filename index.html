@@ -20,9 +20,6 @@ AFRAME.registerComponent('head-track', {
       let torsoBones = [];
 
       this.el.object3D.traverse((obj) => {
-        if (obj.morphTargetDictionary) {
-  morphs.push(Object.keys(obj.morphTargetDictionary));
-        }
         if (!obj.isBone) return;
 
         const name = obj.name.toLowerCase();
