@@ -16,8 +16,12 @@ AFRAME.registerComponent('head-track', {
     const findHead = () => {
       let backup = null;
       let eyeBones = [];
+      let morphs = [];
 
       this.el.object3D.traverse((obj) => {
+        if (obj.morphTargetDictionary) {
+  morphs.push(Object.keys(obj.morphTargetDictionary));
+        }
         if (!obj.isBone) return;
 
         const name = obj.name.toLowerCase();
@@ -47,9 +51,12 @@ if (debug) {
   debug.setAttribute(
     'value',
     this.head
-    ? 'HEAD: ' + this.head.name + ' | EYES: ' +
-      (eyeBones.length ? eyeBones.join(', ') : 'NONE')
-    : 'HEAD NOT FOUND'
+  ? 'HEAD: ' + this.head.name +
+    ' | EYES: ' +
+    (eyeBones.length ? eyeBones.join(', ') : 'NONE') +
+    ' | MORPHS: ' +
+    (morphs.length ? morphs.flat().join(', ') : 'NONE')
+  : 'HEAD NOT FOUND'
   );
 }
 
