@@ -20,6 +20,8 @@ AFRAME.registerComponent('head-track', {
         if (!obj.isBone) return;
 
         const name = obj.name.toLowerCase();
+        
+        console.log('BONE:', obj.name);
 
         if (
           name === 'head' ||
