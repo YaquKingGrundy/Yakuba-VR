@@ -10,6 +10,7 @@
 AFRAME.registerComponent('head-track', {
   init: function () {
     this.head = null;
+    this.chest = null;
     this.camera = document.querySelector('[camera]');
     this.yaw = 0;
 
@@ -23,6 +24,9 @@ AFRAME.registerComponent('head-track', {
         if (!obj.isBone) return;
 
         const name = obj.name.toLowerCase();
+        if (name === 'chest') {
+    this.chest = obj;
+        }
         
         console.log('BONE:', obj.name);
         if (
@@ -108,6 +112,9 @@ targetAngle = THREE.MathUtils.clamp(
 this.yaw += (targetAngle - this.yaw) * 0.08;
 
 this.head.rotation.y = this.yaw;
+    if (this.chest) {
+    this.chest.rotation.y = this.yaw * 0.35;
+    }
   }
 });
 </script>
